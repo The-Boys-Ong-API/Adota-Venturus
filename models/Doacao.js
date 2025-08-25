@@ -37,3 +37,4 @@ export default (sequelize) => {
 
     return Doacao;
 };
+
