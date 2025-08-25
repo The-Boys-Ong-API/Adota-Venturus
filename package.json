@@ -1,0 +1,32 @@
+{
+  "name": "adota-venturos",
+  "version": "1.0.0",
+  "description": "API Voltado para ong de adoção de animais",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/The-Boys-Ong-API/Adota-Venturos.git"
+  },
+  "keywords": [
+    "API",
+    "ONG",
+    "ADOCAO",
+    "PETS"
+  ],
+  "author": "Victor Dumer, Diogo André, Matheus Bufon, Murilo Zanetti",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/The-Boys-Ong-API/Adota-Venturos/issues"
+  },
+  "homepage": "https://github.com/The-Boys-Ong-API/Adota-Venturos#readme",
+  "dependencies": {
+    "encryptjs": "^2.0.0",
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10",
+    "sequelize": "^6.37.7",
+    "sqlite3": "^5.1.7"
+  }
+}
