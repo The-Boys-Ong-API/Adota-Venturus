@@ -1,19 +1,9 @@
-import express from 'express'
-import adocoes from './Routes/adocoes.js'
-import animal from './Routes/Animal.js'
-import usuarios from './Routes/Usuarios.js'
-import doacoes from './Routes/doacoes.js'
-import login from './Routes/login.js'
-import questionario from './Routes/Questionario.js'
-import tutores from './Routes/Tutores.js'
+import express from "express";
+import Rotas from "./Routes/Rotas.js";
+import sequelize from "sequelize"; // conexão com Sequelize
 
 const app = express();
-
 const port = 8080;
 
-
-app.use(express.json());
-
-app.listen(port ,() =>{
-    console.log(`Servidor aberto!!\n Rodando na Porta: Localhost://${port}`);
-})
+app.use(express.json())
+app.use(Rotas())

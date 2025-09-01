@@ -1,8 +1,7 @@
 import { DataTypes } from 'sequelize';
 
-
 export default (sequelize) => {
-    const UsuarioModel = sequelize.define('usuario', {
+    const TutorModel ={
         id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
@@ -65,33 +64,7 @@ export default (sequelize) => {
         },
         facebook: {
             type: DataTypes.STRING,
-            allowNull: true
-        },
-        administrador: {
-            type: DataTypes.BOOLEAN,
-            allowNull: false,
-            defaultValue: false
-        },
-        questionarioId:{
-            type: DataTypes.UUID,
-            allowNull: true,
-            references:{
-                model: 'questionarios',
-                key: 'id'
-            }
-            
-        }
-    }, {
-        tableName: 'usuario',
-        timestamps: true
-    });
-
-    UsuarioModel.associate = (models) => {
-        UsuarioModel.belongsTo(models.Questionario, {
-            foreignKey: 'questionarioId',
-            as: 'questionario'
-        });
-    };
-
-    return UsuarioModel;
-};
+    }
+}
+    return TutorModel;
+}
