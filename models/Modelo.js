@@ -1,9 +1,9 @@
 import { Sequelize } from 'sequelize';
-import Animal from './Animal.js';
+import Animal from './animal.js';
 import TutorModel from './Tutor.js';
 import QuestionarioModel from './Questionario.js';
-import PedidoAdocaoModel from './PedidoAdocao.js';
-import DoacaoModel from './Doacao.js';
+import PedidoAdocaoModel from './pedidoAdocao.js';
+import DoacaoModel from './doacao.js';
 
 export const sequelize = new Sequelize({
     dialect: 'sqlite',
