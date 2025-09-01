@@ -1,7 +1,8 @@
 import { DataTypes } from 'sequelize';
 
 export default (sequelize) => {
-    return sequelize.define('Animal', {
+    
+    const animal= sequelize.define('Animal', {
         id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
@@ -47,4 +48,6 @@ export default (sequelize) => {
         tableName: 'animais',
         timestamps: true,
     });
+
+    return animal;
 };

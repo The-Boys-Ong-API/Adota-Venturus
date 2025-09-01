@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 
 export default (sequelize) => {
-    const Doacao = sequelize.define('Doacao', {
+    const doacao = sequelize.define('Doacao', {
         id: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
@@ -35,5 +35,5 @@ export default (sequelize) => {
         timestamps: true
     });
 
-    return Doacao;
+    return doacao;
 };

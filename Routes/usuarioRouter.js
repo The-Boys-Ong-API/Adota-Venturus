@@ -3,10 +3,10 @@ import usuarioController from "../controllers/usuarioController.js";
 
 const usuarioRouter = Router();
 
-usuarioRouter.post('/usuario', UsuarioController);
+usuarioRouter.get('/:id', usuarioController.buscarPorId);
 
-usuarioRouter.get('/tutores/:id', UsuarioController.buscarPorId);
+usuarioRouter.post('/', usuarioController.cadastroUsuario);
 
-usuarioRouter.patch('/tutores/:id', UsuarioController.atualizaPorId)
+usuarioRouter.patch('/:id', usuarioController.atualizaPorId)
 
 export default usuarioRouter;

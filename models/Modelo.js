@@ -1,17 +1,17 @@
 import { Sequelize } from 'sequelize';
-import Animal from './animal.js';
-import TutorModel from './Tutor.js';
-import QuestionarioModel from './Questionario.js';
+import AnimalModel from './Animal.js';
+import UsuarioModel from './Usuario.js';
+import QuestionarioModel from './Quesitonario.js';
 import PedidoAdocaoModel from './pedidoAdocao.js';
-import DoacaoModel from './doacao.js';
+import DoacaoModel from './Doacao.js';
 
 export const sequelize = new Sequelize({
     dialect: 'sqlite',
-    storage: './database.sqlite',
+    storage: './Data/database.sqlite',
 });
 
 export const Animal = AnimalModel(sequelize);
-export const Tutor = TutorModel(sequelize);
+export const Usuario = UsuarioModel(sequelize);
 export const Questionario = QuestionarioModel(sequelize);
 export const PedidoAdocao = PedidoAdocaoModel(sequelize);
 export const Doacao = DoacaoModel(sequelize);
@@ -25,4 +25,4 @@ export const Doacao = DoacaoModel(sequelize);
 
 await sequelize.sync();
 
-export default { sequelize, Animal, Tutor, Questionario, PedidoAdocao, Doacao };
+export default { sequelize, Animal, Usuario, Questionario, PedidoAdocao, Doacao };
