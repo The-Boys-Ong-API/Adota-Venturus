@@ -18,7 +18,7 @@ let animals = [
 
 //rotas para animais
 
-router.get('/animais', ( req, res ) => {
+router.get('/', ( req, res ) => {
     res.json(animals);
 });
 

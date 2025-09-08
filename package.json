@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/The-Boys-Ong-API/Adota-Venturos#readme",
   "dependencies": {
+    "dotenv": "^17.2.2",
     "encryptjs": "^2.0.0",
     "express": "^5.1.0",
     "nodemon": "^3.1.10",
