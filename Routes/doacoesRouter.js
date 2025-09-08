@@ -3,6 +3,6 @@ import doacaoController from "../controllers/doacaoController.js";
 
 const doacaoRouter = Router();
 
-doacaoRouter.post('/', usuarioController.cadastroUsuario);
+doacaoRouter.post('/', loginController.autenticacaoLogin);
 
 export default doacaoRouter;

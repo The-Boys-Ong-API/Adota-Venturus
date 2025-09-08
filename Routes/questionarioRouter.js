@@ -3,6 +3,6 @@ import questionarioController from "../controllers/questionarioController.js";
 
 const questionarioRouter = Router();
 
-questionarioRouter.post('/', usuarioController.cadastroUsuario);
+questionarioRouter.post('/', questionarioController.cadastroQuestionario);
 
 export default questionarioRouter;
