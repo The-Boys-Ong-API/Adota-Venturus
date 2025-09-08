@@ -1,11 +1,24 @@
 import {Usuario as usuario} from "../models/Modelo.js";
+import encryptjs from "encryptjs";
+import dotenv, { configDotenv } from "dotenv";
+dotenv.config();
+const encrypt = encryptjs;
+
+import Usuario from "../models/Usuario.js";
+
+const chave= process.env.SECRETKEY
 
 const usuarioController  = {
 
     async cadastroUsuario(req,res) {
         try {
-            const { nome_completo, senha, email, cidade, estado, idade, telefone, instagram, facebook } = req.body;
+            const { nome_completo, email, cidade, estado, idade, telefone, instagram, facebook } = req.body;
 
+            const senhareq = req.body.senha;
+
+            const senha=encrypt.encrypt(senhareq,chave,256)
+            
+            
             if(!nome_completo || !senha || !email || !cidade || !estado || !idade || !telefone){
                 return res.status(400).json({ erro: "Todos os campos obrigatórios devem ser preenchidos corretamente." });
             }
@@ -14,7 +27,6 @@ const usuarioController  = {
             if (testUser){
                 return res.status(400).json({ erro : "Email preenchido já está sendo utilizado." });
             }
-
             const novoUser = await usuario.create({ nome_completo, senha, email, cidade, estado, idade, telefone, instagram, facebook });
 
             const { senha: _, ...usuarioSemSenha } = novoUser.toJSON();
@@ -38,8 +50,7 @@ const usuarioController  = {
                 return res.status(404).json({ erro: "Tutor não encontrado." });
             }
 
-            const { senha: _, ...usuarioSemSenha } = user.toJSON();
-            return res.status(200).json(usuarioSemSenha);
+            return res.status(200).json(user);
 
         } catch (error) {
             console.error(error);
@@ -50,20 +61,30 @@ const usuarioController  = {
     async atualizaPorId(req,res){
         try {
             const dados = req.body;
+
+            
             const {id} = req.params;
 
             if(!dados || JSON.stringify(dados) === '{}'){
                 return res.status(400).json({ erro: 'Pelo menos um campo deve ser enviado para atualização' });
             }
 
-            const testUser = await usuario.findByPk(id);
-            if(!testUser){
+            const user = await usuario.findByPk(id);
+            if(!user){
                 return res.status(404).json({ erro: "Tutor não encontrado" });
             }
 
-            await testUser.update(dados);
+            const senhareq = req.body.senha;
 
-            const { senha: _, ...usuarioSemSenha } = testUser.toJSON();
+            if(senhareq){
+
+                dados.senha=encrypt.encrypt(senhareq,chave,256);
+            }
+            
+            const { senha: _, ...usuarioSemSenha } = user.toJSON();
+            
+            await user.update(dados);
+            
             return res.status(200).json({ mensagem: "Dados atualizados com sucesso", ...usuarioSemSenha });
 
         } catch (error) {
