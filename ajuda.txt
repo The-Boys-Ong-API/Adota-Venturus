@@ -1,0 +1,3 @@
+controller -> Lógica,
+Router -> Qual o método, Chama a função da Lógica (CONTROLLER.FUNCAO)
+
