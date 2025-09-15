@@ -19,7 +19,7 @@ Repositório de referência para o desenvolvimento deste projeto:
 
 ---
 
-## Feito por
+## 🔰 Feito por
 
 Diogo André Messias,
 Matheus Bufon Alves,
