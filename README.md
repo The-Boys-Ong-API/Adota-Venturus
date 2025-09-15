@@ -21,8 +21,8 @@ Repositório de referência para o desenvolvimento deste projeto:
 
 ## Feito por
 
-Diogo André Messias
-Matheus Bufon Alves
-Murilo Monteiro Zanetti
-Victor Gabriel Cruz de Souza Dumer
+Diogo André Messias,
+Matheus Bufon Alves,
+Murilo Monteiro Zanetti,
+Victor Gabriel Cruz de Souza Dumer.
 
