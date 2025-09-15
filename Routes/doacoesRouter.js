@@ -1,8 +1,9 @@
 import { Router } from "express";
-import doacaoController from "../controllers/doacaoController.js";
+import doacoesController from "../controllers/doacaoController.js";
 
 const doacaoRouter = Router();
 
-doacaoRouter.post('/', loginController.autenticacaoLogin);
+doacaoRouter.post('/', doacoesController.efetuarDoacao);
+//doacaoRouter.post('/', doacoesController.cadastroDoacao);
 
 export default doacaoRouter;

@@ -10,15 +10,20 @@ Perguntar e retirar as Seguintes dúvidas para a galera da Venturus;
 
 import {Doacao as doacao} from "../models/Modelo.js";
 
-const doacaoController = {
+const doacoesController = {
 
-    async cadastroDoacao (req,res) {
+    async efetuarDoacao (req,res) {
         try {
             const {valor} = req.body;
+            // const qrcode = await doacao.qrcode;
+            // const linkpix = await doacao.linkPix;
 
             if(!valor){
-                return res.status(400).json({ erro: "Todos os campos obrigatórios devem ser preenchidos corretamente." });
+                return res.status(400).json({ erro: "Valor da doação é obrigatório e deve ser um número positivo" });
             }
+
+            //return res.status(200).json(qrcode);
+            //return res.status(200).json(linkpix);
 
         } catch (error) {
             console.error(error);
@@ -26,14 +31,30 @@ const doacaoController = {
         }
     },
 
-    // async efetuarDoacao (req,res){
-    //     try {
-            
-    //     } catch (error) {
-            
-    //     }
-    // }
+    async cadastroDoacao (req,res){
+        try {
+            const {nome, email, valor, mensagem} = req.body;
+            // const qrcode = await doacao.;
+            // const linkpix = await doacao.;
+
+            if(!nome || !email || !valor || !mensagem ){
+                return res.status(400).json({ erro: "Todos os campos obrigatórios devem ser preenchidos corretamente." });
+            }
+
+            const novaDoacao = await doacao.create({ nome, email, valor, mensagem });
+
+            //const { senha: _, ...usuarioSemSenha } = novaDoacao.toJSON();
+
+            //return res.status(200).json(qrcode);
+            //return res.status(200).json(linkpix);
+            //return res.status(201).json();
+
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ erro: "Erro ao processar a doação" });
+        }
+    }
 
 }
 
-export default doacaoController;
+export default doacoesController;
