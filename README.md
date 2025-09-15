@@ -17,3 +17,12 @@ Este projeto tem como objetivo o desenvolvimento de uma API para um sistema de a
 Repositório de referência para o desenvolvimento deste projeto:
 🔗 [https://github.com/alexnasciment3/projeto\_bento\_2S\_2025](https://github.com/alexnasciment3/projeto_bento_2S_2025)
 
+---
+
+## 🔰 Feito por
+
+Diogo André Messias,
+Matheus Bufon Alves,
+Murilo Monteiro Zanetti,
+Victor Gabriel Cruz de Souza Dumer.
+
