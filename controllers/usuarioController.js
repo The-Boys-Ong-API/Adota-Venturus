@@ -4,9 +4,9 @@ import dotenv, { configDotenv } from "dotenv";
 dotenv.config();
 const encrypt = encryptjs;
 
-import Usuario from "../models/Usuario.js";
 
 const chave= process.env.SECRETKEY
+import Usuario from "../models/Usuario.js";
 
 const usuarioController  = {
 

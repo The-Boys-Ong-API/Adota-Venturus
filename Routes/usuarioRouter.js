@@ -7,6 +7,6 @@ usuarioRouter.get('/:id', usuarioController.buscarPorId);
 
 usuarioRouter.post('/', usuarioController.cadastroUsuario);
 
-usuarioRouter.patch('/:id', usuarioController.atualizaPorId)
+usuarioRouter.patch('/:id', usuarioController.atualizaPorId);
 
 export default usuarioRouter;
