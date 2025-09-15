@@ -1,41 +1,12 @@
 import express from 'express';
+import AnimalController from '../controllers/animalController';
 const router = express.Router();
 
-let animals = [
-    /** como deve ser feito.*/
-    {
-       "id": "uuid",
-       "nome": "string",
-       "especie": "string",
-       "porte": "string",
-       "castrado": true,
-       "vacinado": true,
-       "descricao": "string",
-       "foto": "Buffer"
-    }
-
-]
 
 //rotas para animais
 
-router.get('/', ( req, res ) => {
-    res.json(animals);
-});
+router.get('/:id', AnimalController.buscarPorId);
 
-router.post('/animais', (req, res) => {
-    const novo ={
-        id : "uuid",
-        ...req.body
-    };
-    animals.push(novo);
-    res.status(201).json(novo);
-});
+router.post('/animais', AnimalController.cadastroAnimal);
 
-router.put('/animais/:id', (req, res) => {
-    const id = parseInt(req.params.id);
-    const indez = animals.findIndex(animals => animals.id === id);
-
-    if (index === -1) {
-        return res.status(404).json({ erro: "Animal não encontrado" });
-    }
-})
+router.put('/animais/:id', AnimalController.atualizaPorId);

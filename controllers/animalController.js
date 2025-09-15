@@ -73,4 +73,4 @@ const AnimalController = {
     }
 }
 
-export default usuarioController;
+export default AnimalController;
