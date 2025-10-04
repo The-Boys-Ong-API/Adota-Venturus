@@ -3,12 +3,11 @@ import usuarioRouter from './Routes/usuarioRouter.js';
 import loginRouter from './Routes/loginRouter.js';
 import adocoesRouter from './Routes/adocoesRouter.js';
 import questionarioRouter from './Routes/questionarioRouter.js';
-// import animaisRouter
+import animalRouter from './Routes/animalRouter.js';
 const app = express();
 
 app.use(express.json());
-// app.use('/animais', animaisRouters);
-
+app.use('/animais', animalRouter);
 app.use('/tutores', usuarioRouter);
 app.use('/autenticacao',loginRouter);
 app.use('/adocoes', adocoesRouter);

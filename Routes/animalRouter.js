@@ -1,12 +1,13 @@
-import express from 'express';
-import AnimalController from '../controllers/animalController';
-const router = express.Router();
+import { Router } from "express";
+import AnimalController from '../controllers/animalController.js';
 
-
+const animalRouter = Router();
 //rotas para animais
 
-router.get('/:id', AnimalController.buscarPorId);
+animalRouter.get('/:id', AnimalController.buscarPorId);
 
-router.post('/animais', AnimalController.cadastroAnimal);
+animalRouter.post('/', AnimalController.cadastroAnimal);
 
-router.put('/animais/:id', AnimalController.atualizaPorId);
+animalRouter.put('/:id', AnimalController.atualizaPorId);
+
+export default animalRouter;
