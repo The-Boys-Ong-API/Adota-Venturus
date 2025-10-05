@@ -14,13 +14,22 @@ const doacoesController = {
 
     async efetuarDoacao (req,res) {
         try {
-            const {valor} = req.body;
+            const {nome, email, valor, linkPix, mensagem} = req.body; //pode tirar esse linkPix daí, só coloquei para poder testar aqui no Insomnia
             // const qrcode = await doacao.qrcode;
             // const linkpix = await doacao.linkPix;
 
-            if(!valor){
+            if(!valor || valor < 0.01){
                 return res.status(400).json({ erro: "Valor da doação é obrigatório e deve ser um número positivo" });
             }
+
+            const newDonation = await doacao.create({nome, email, valor, linkPix, mensagem});
+            return res.status(201).json({
+                nome: newDonation.nome,
+                email: newDonation.email,
+                valor: newDonation.valor,
+                linkPix: newDonation.linkPix,
+                mensagem: newDonation.mensagem
+        });
 
             //return res.status(200).json(qrcode);
             //return res.status(200).json(linkpix);

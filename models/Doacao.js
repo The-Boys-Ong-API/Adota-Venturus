@@ -20,10 +20,10 @@ export default (sequelize) => {
             type: DataTypes.FLOAT,
             allowNull: false 
         },
-        //linkPix: { 
-        //    type: DataTypes.STRING,
-        //    allowNull: false 
-        //},
+        linkPix: { 
+            type: DataTypes.STRING,
+           allowNull: false 
+        },
         mensagem: {
             type: DataTypes.STRING,
             allowNull: false 
