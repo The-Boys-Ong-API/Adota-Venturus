@@ -1,12 +1,11 @@
 import {Usuario as usuario} from "../models/Modelo.js";
 import encryptjs from "encryptjs";
-import dotenv, { configDotenv } from "dotenv";
+import dotenv from "dotenv";
 dotenv.config();
 const encrypt = encryptjs;
 
 
 const chave= process.env.SECRETKEY
-import Usuario from "../models/Usuario.js";
 
 const usuarioController  = {
 

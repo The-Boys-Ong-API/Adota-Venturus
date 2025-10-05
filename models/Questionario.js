@@ -8,6 +8,14 @@ export default (sequelize) => {
             primaryKey: true,
             allowNull: false
         },
+        tutor_id: {
+            type: DataTypes.UUID,
+            allowNull: false,
+            references: {
+                model: 'Usuario',
+                key: 'id'
+            }
+        },
         empregado: {
             type: DataTypes.BOOLEAN,
             allowNull: true

@@ -8,6 +8,6 @@ animalRouter.get('/:id', AnimalController.buscarPorId);
 
 animalRouter.post('/', AnimalController.cadastroAnimal);
 
-animalRouter.put('/:id', AnimalController.atualizaPorId);
+animalRouter.patch('/:id', AnimalController.atualizaPorId);
 
 export default animalRouter;

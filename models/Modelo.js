@@ -21,8 +21,10 @@ export const Doacao = DoacaoModel(sequelize);
 // - Um Tutor tem um Questionario.
 // - Um Tutor pode ter vários Pedidos de Adoção.
 // - Um Animal pode ter vários Pedidos de Adoção.
-// A tabela PedidosAdocao serve como uma tabela de junção entre Tutores e Animais.
 
-await sequelize.sync();
+Usuario.hasOne(Questionario, { foreignKey: 'tutor_id' });
+Questionario.belongsTo(Usuario, { foreignKey: 'tutor_id' });
+
+await sequelize.sync({ alter: true });
 
 export default { sequelize, Animal, Usuario, Questionario, PedidoAdocao, Doacao };
