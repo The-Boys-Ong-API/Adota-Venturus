@@ -1,4 +1,11 @@
-import { Animal as animal } from "../models/Modelo.js";
+import { Animal as animal, Usuario as usuario } from "../models/Modelo.js";
+import dotenv from "dotenv";
+import encryptjs from "encryptjs";
+dotenv.config();
+
+const encrypt = encryptjs;
+
+const chave= process.env.SECRETKEY
 
 const AnimalController = {
     async cadastroAnimal(req, res) {
@@ -55,7 +62,7 @@ const AnimalController = {
         }
     },
 
-    async atualizaPorId(req, res){
+    async adminAtualizaPorId(req, res){
         try {
             const dados = req.body;
             const { id } = req.params;
@@ -78,7 +85,34 @@ const AnimalController = {
             console.error(error);
             return res.status(500).json({ erro: "Erro ao atualizar os dados do animal..."});
         }
+    },
+    async adminBuscarAnimais(req, res) {
+    
+    try {
+        const { id, senha: senhareq } = req.body;
+
+        // console.log("ID recebido:", id);
+        // console.log("Senha recebida:", senhareq);
+
+        const senha = encrypt.encrypt(senhareq, chave, 256);
+
+        const user = await usuario.findByPk(id);
+        //console.log("Senha user:", user.senha);
+        
+        const senhad = encrypt.decrypt(user.senha, chave, 256);
+
+        if (!user || !user.administrador || senhad !== senhareq) {
+        return res.status(403).json({ erro: "Acesso negado. Usuário não autorizado." });
+        }
+
+        const animais = await animal.findAll();
+        return res.status(200).json({ animais, total: animais.length });
+
+    } catch (error) {
+        return res.status(500).json({ erro: "Erro ao buscar animais" });
     }
+}
+
 }
 
 export default AnimalController;

@@ -22,9 +22,9 @@ export const Doacao = DoacaoModel(sequelize);
 // - Um Tutor pode ter vários Pedidos de Adoção.
 // - Um Animal pode ter vários Pedidos de Adoção.
 
-Usuario.hasOne(Questionario, { foreignKey: 'tutor_id' });
+Usuario.hasOne(Questionario, { foreignKey: 'tutor_id', as: 'questionario' });
 Questionario.belongsTo(Usuario, { foreignKey: 'tutor_id' });
 
-await sequelize.sync({ alter: true });
+await sequelize.sync();
 
 export default { sequelize, Animal, Usuario, Questionario, PedidoAdocao, Doacao };

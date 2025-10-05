@@ -5,9 +5,11 @@ import adocoesRouter from './Routes/adocoesRouter.js';
 import questionarioRouter from './Routes/questionarioRouter.js';
 import animalRouter from './Routes/animalRouter.js';
 import doacoesRouter from './Routes/doacoesRouter.js';
+import adminRouter from './Routes/adminRouter.js';
 const app = express();
 
 app.use(express.json());
+app.use('/admin', adminRouter);
 app.use('/animais', animalRouter);
 app.use('/tutores', usuarioRouter);
 app.use('/autenticacao',loginRouter);

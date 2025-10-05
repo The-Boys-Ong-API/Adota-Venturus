@@ -1,4 +1,5 @@
-import {Usuario as usuario} from "../models/Modelo.js";
+import {Usuario as usuario, Questionario} from "../models/Modelo.js";
+
 import encryptjs from "encryptjs";
 import dotenv from "dotenv";
 dotenv.config();
@@ -17,8 +18,7 @@ const usuarioController  = {
 
             const senha=encrypt.encrypt(senhareq,chave,256)
             
-            
-            if(!nome_completo || !senha || !email || !cidade || !estado || !idade || !telefone){
+            if(!nome_completo || !senhareq || !email || !cidade || !estado || !idade || !telefone){
                 return res.status(400).json({ erro: "Todos os campos obrigatórios devem ser preenchidos corretamente." });
             }
             
@@ -48,8 +48,8 @@ const usuarioController  = {
             if(!user){
                 return res.status(404).json({ erro: "Tutor não encontrado." });
             }
-
-            return res.status(200).json(user);
+            const { senha: _, ...usuarioSemSenha } = user.toJSON();
+            return res.status(200).json(usuarioSemSenha);
 
         } catch (error) {
             console.error(error);
@@ -73,18 +73,33 @@ const usuarioController  = {
                 return res.status(404).json({ erro: "Tutor não encontrado" });
             }
 
-            const senhareq = req.body.senha;
 
-            if(senhareq){
+            if(dados.senha){
 
-                dados.senha=encrypt.encrypt(senhareq,chave,256);
+                dados.senha=encrypt.encrypt(dados.senha,chave,256);
             }
             
-            const { senha: _, ...usuarioSemSenha } = user.toJSON();
-            
             await user.update(dados);
-            
-            return res.status(200).json({ mensagem: "Dados atualizados com sucesso", ...usuarioSemSenha });
+            if (dados.questionario) {
+
+            const questionarioExistente = await Questionario.findOne({ where: { tutor_id: id } });
+
+            if (questionarioExistente) {
+            await questionarioExistente.update(dados.questionario);
+            } else {
+            await Questionario.create({ ...dados.questionario, tutor_id: id });
+            }
+        }
+            const userAtualizado = await usuario.findByPk(id, {
+                attributes: { exclude: ['senha'] },
+                include: {
+                model: Questionario,
+                as: 'questionario',
+                attributes: { exclude: ['id', 'tutor_id', 'createdAt', 'updatedAt'] }
+                }
+            });
+
+            return res.status(200).json({ mensagem: "Dados atualizados com sucesso", ...userAtualizado.toJSON() });
 
         } catch (error) {
             console.error(error);

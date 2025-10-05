@@ -31,7 +31,11 @@ const questionarioController = {
             ); 
 
             if (!tutor_id || missingFields.length > 0) {
-                return res.status(400).json({erro: "Todos os campos obrigatórios devem ser preenchidos corretamente"})
+                return res.status(400).json(
+                    {erro: "Todos os campos obrigatórios devem ser preenchidos corretamente",
+                    campos_faltando: missingFields
+                    },
+                )
             }
 
             const tutor = await Usuario.findByPk(tutor_id);
