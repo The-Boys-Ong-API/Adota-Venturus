@@ -64,14 +64,28 @@ const AnimalController = {
 
     async adminAtualizaPorId(req, res){
         try {
-            const dados = req.body;
-            const { id } = req.params;
-
+            const { id: idAnimal } = req.params;
+            const { senha: senhareq, id: idAdmin, ...dados } = req.body;
+            
+            // console.log(`ID ADMIN:${idAdmin} \n Senhareq= ${senhareq} \n Dados:${dados}`)
+            if (!idAdmin || !senhareq || !idAnimal || !dados || JSON.stringify(dados) === '{}') {
+                return res.status(400).json({ erro: "Nenhum campo foi fornecido para atualização" });
+            }
             /*if (!dados || JSON.stringify(dados) === '{}'){
                 return res.status(400).json({ erro: 'Pelo menos um campo deve ser enviado para atualização'});
             }*/
 
-            const testAnimal = await animal.findByPk(id);
+            const adm = await usuario.findByPk(idAdmin)
+            if (!adm || !adm.administrador) {
+            return res.status(403).json({ erro: "Acesso negado. Usuário não autorizado." });
+            }
+            const senhad = encrypt.decrypt(adm.senha, chave, 256);
+
+            if (!adm || !adm.administrador || senhad !== senhareq) {
+            return res.status(403).json({ erro: "Acesso negado. Usuário não autorizado." });
+            }
+
+            const testAnimal = await animal.findByPk(idAnimal);
             if (!testAnimal){
                 return res.status(404).json({ erro: "Animal não encontrado..."});
             }
