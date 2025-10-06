@@ -105,7 +105,29 @@ const usuarioController  = {
             console.error(error);
             return res.status(500).json({ erro: "Erro ao atualizar os dados do tutor" });
         }
-    }
+    },
+    async authenticacao(req,res){
+        try {
+            const {id, senha} = req.body;
+            
+            const user = await usuario.findByPk(id);
+            
+            if(!user){
+                return res.status(401).json({"erro": "Email ou senha inválidos."})
+            }
+            const senhad = await encrypt.decrypt(user.senha, chave, 256);
+
+            if(senha !== senhad){
+                return res.status(401).json({"erro": "Email ou senha inválidos."})  
+            }
+
+             return res.status(200).json({ mensagem: "Login bem-sucedido"});
+            
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({erro: "Erro interno ao tentar fazer o login."})
+        }
+        }
 }
 
 export default usuarioController;
