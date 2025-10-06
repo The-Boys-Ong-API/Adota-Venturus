@@ -6,6 +6,8 @@ Perguntar e retirar as Seguintes dúvidas para a galera da Venturus;
     Se o cadastro do valor for junto dos outros, essa mensagem de erro não
     englobaria tudo...
 */
+import { Pix } from "faz-um-pix";
+
 
 
 import {Doacao as doacao} from "../models/Modelo.js";
@@ -14,20 +16,27 @@ const doacoesController = {
 
     async efetuarDoacao (req,res) {
         try {
-            const {nome, email, valor, linkPix, mensagem} = req.body; //pode tirar esse linkPix daí, só coloquei para poder testar aqui no Insomnia
-            // const qrcode = await doacao.qrcode;
-            // const linkpix = await doacao.linkPix;
+            const {nome, email, valor, mensagem} = req.body; //pode tirar esse linkPix daí, só coloquei para poder testar aqui no Insomnia
+            
+            
+             if (!nome || !email || !valor) {
+                return res.status(400).json({ erro: "Nome, e-mail, valor  são obrigatórios para a doação." });
+            }
 
             if(!valor || valor < 0.01){
                 return res.status(400).json({ erro: "Valor da doação é obrigatório e deve ser um número positivo" });
             }
+            const qrPix = await Pix(email, nome, '', valor, '', true);
 
-            const newDonation = await doacao.create({nome, email, valor, linkPix, mensagem});
+            const linkPix = await Pix(email, nome, '', valor, '');
+            
+            const newDonation = await doacao.create({nome, email, valor, linkPix, mensagem, qrPix});
             return res.status(201).json({
                 nome: newDonation.nome,
                 email: newDonation.email,
                 valor: newDonation.valor,
                 linkPix: newDonation.linkPix,
+                qrPix: newDonation.qrPix,
                 mensagem: newDonation.mensagem
         });
 

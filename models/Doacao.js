@@ -24,6 +24,10 @@ export default (sequelize) => {
             type: DataTypes.STRING,
            allowNull: false 
         },
+        qrPix: { 
+           type: DataTypes.TEXT("small"),
+           allowNull: false 
+        },
         mensagem: {
             type: DataTypes.STRING,
             allowNull: false 
