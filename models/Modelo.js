@@ -13,6 +13,8 @@ export const sequelize = new Sequelize({
     storage: './Data/database.sqlite',
 });
 
+
+
 export const Animal = AnimalModel(sequelize);
 export const Usuario = UsuarioModel(sequelize);
 export const Questionario = QuestionarioModel(sequelize);

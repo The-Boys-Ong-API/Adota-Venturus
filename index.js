@@ -6,8 +6,10 @@ import questionarioRouter from './Routes/questionarioRouter.js';
 import animalRouter from './Routes/animalRouter.js';
 import doacoesRouter from './Routes/doacoesRouter.js';
 import adminRouter from './Routes/adminRouter.js';
+import seed from './seed.js';
 const app = express();
 
+seed();
 app.use(express.json());
 app.use('/admin', adminRouter);
 app.use('/animais', animalRouter);

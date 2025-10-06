@@ -26,14 +26,16 @@ const AnimalController = {
             //const { senha : _, ...animalSemSenha } = novoAnimal.toJSON();
 
             return res.status(201).json({
-                mensagem: "Animal cadastrado com sucesso",
+                id: novoAnimal.id,
                 nome: novoAnimal.nome,
                 especie: novoAnimal.especie,
                 porte: novoAnimal.porte,
+                mensagem: "Animal cadastrado com sucesso",
                 castrado: novoAnimal.castrado,
                 vacinado: novoAnimal.vacinado,
                 adotado: novoAnimal.adotado,
-                descricao: novoAnimal.descricao
+                descricao: novoAnimal.descricao,
+                foto: novoAnimal.foto
 
             });
 
@@ -93,7 +95,7 @@ const AnimalController = {
             await testAnimal.update(dados);
 
             //const { senha: _, ... animalSemSenha } = testAnimal.toJSON();
-            return res.status(200).json({ mensagem: "Animal atualizado com sucesso...", testAnimal });
+            return res.status(200).json(testAnimal );
 
         }catch (error) {
             console.error(error);
