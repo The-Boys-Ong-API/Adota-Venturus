@@ -128,28 +128,50 @@ const AnimalController = {
         return res.status(500).json({ erro: "Erro ao buscar animais" });
     }
     
-},  async adminDeletaAnimais(req,res){
-        
-        const { id, senha: senhareq } = req.body;
+},  async adminDeletaAnimais(req, res) {
 
-        // console.log("ID recebido:", id);
-        // console.log("Senha recebida:", senhareq);
+    try {
+        const { id: animalId } = req.params;
+        const { id: adminId, senha: senhareq } = req.body;
 
-        const senha = encrypt.encrypt(senhareq, chave, 256);
+        console.log("ID do animal recebido:", animalId);
+        console.log("ID do admin recebido:", adminId);
 
-        const user = await usuario.findByPk(id);
-        //console.log("Senha user:", user.senha);
-        
-        const senhad = encrypt.decrypt(user.senha, chave, 256);
+    
+        const user = await usuario.findByPk(adminId);
 
-        if (!user || !user.administrador || senhad !== senhareq) {
-        return res.status(403).json({ erro: "Acesso negado. Usuário não autorizado." });
+
+        if(!user){
+            return res.status(404).json({ erro: "Usuário não encontrado" });
+        }
+
+        if (!user.administrador) {
+            return res.status(403).json({ erro: "Acesso não autorizado" });
         }
 
         
 
+        const senhad = encrypt.decrypt(user.senha, chave, 256);
 
+        if (senhad !== senhareq) {
+            return res.status(403).json({ erro: "Acesso não autorizado" });
+        }
+
+        const animalEncontrado = await animal.findByPk(animalId);
+
+        console.log(`Animal: ${animalEncontrado}`);
+        if (!animalEncontrado) {
+            return res.status(404).json({ erro: "Animal não encontrado" });
+        }
+
+        await animalEncontrado.destroy();
+
+        return res.status(204)
+
+    } catch (error) {
+        return res.status(500).json({ erro: "Erro ao remover animal" });
     }
+}
 
 }
 
