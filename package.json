@@ -28,6 +28,8 @@
     "encryptjs": "^2.0.0",
     "express": "^5.1.0",
     "nodemon": "^3.1.10",
+    "pg": "^8.16.3",
+    "postgres": "^3.4.7",
     "sequelize": "^6.37.7",
     "sqlite3": "^5.1.7"
   }
