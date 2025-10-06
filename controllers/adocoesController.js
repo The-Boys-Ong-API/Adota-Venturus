@@ -1,14 +1,21 @@
 import PedidoAdocao, { PedidoAdocao as pedidoAdocao  } from "../models/Modelo.js";
-import { Usuario, Animal } from '../models/Modelo.js';
+import { Usuario, Animal, Questionario } from '../models/Modelo.js';
 
 const adocoesController = {
     async fazerPedido(req, res) {
         try{
             const {tutorId,animalId } = req.body;
-            //Erro 400 ao tentar fazer o pedido caso ele não tenha respondido o questionário
+            
             const tutor = await Usuario.findByPk(tutorId);
             const animal = await Animal.findByPk(animalId);
+            
 
+            const questionarioExistente = await Questionario.findOne({ where: { tutor_id: tutor.id} });
+            
+            if (!questionarioExistente) {
+                return res.status(400).json({erro: "O tutor ainda não respondeu o questionário obrigatório"});
+            }
+            
             if(!tutor || !animal) {
                 return res.status(404).json({erro: "Tutor ou Animal não encontrado"});
             }

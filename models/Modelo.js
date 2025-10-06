@@ -9,13 +9,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export const sequelize = new Sequelize({
-    username: process.env.USER,
-    password: process.env.PASSWORD,
-    database: process.env.DATABASE,
-    host: process.env.HOST,
-    port: process.env.PORT,
-    dialect: 'postgres',
-    logging: false,
+    dialect: 'sqlite',
+    storage: './Data/database.sqlite',
 });
 
 export const Animal = AnimalModel(sequelize);

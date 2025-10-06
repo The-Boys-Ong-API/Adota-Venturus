@@ -125,7 +125,29 @@ const AnimalController = {
     } catch (error) {
         return res.status(500).json({ erro: "Erro ao buscar animais" });
     }
-}
+    
+},  async adminDeletaAnimais(req,res){
+        
+        const { id, senha: senhareq } = req.body;
+
+        // console.log("ID recebido:", id);
+        // console.log("Senha recebida:", senhareq);
+
+        const senha = encrypt.encrypt(senhareq, chave, 256);
+
+        const user = await usuario.findByPk(id);
+        //console.log("Senha user:", user.senha);
+        
+        const senhad = encrypt.decrypt(user.senha, chave, 256);
+
+        if (!user || !user.administrador || senhad !== senhareq) {
+        return res.status(403).json({ erro: "Acesso negado. Usuário não autorizado." });
+        }
+
+        
+
+
+    }
 
 }
 
