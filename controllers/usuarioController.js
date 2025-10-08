@@ -12,7 +12,7 @@ const usuarioController  = {
 
     async cadastroUsuario(req,res) {
         try {
-            const { nome_completo, email, cidade, estado, idade, telefone, instagram, facebook } = req.body;
+            const { nome_completo, email, cidade, estado, idade, telefone, instagram, facebook, administrador, ...dados } = req.body;
 
             const senhareq = req.body.senha;
 
@@ -26,7 +26,7 @@ const usuarioController  = {
             if (testUser){
                 return res.status(400).json({ erro : "Email preenchido já está sendo utilizado." });
             }
-            const novoUser = await usuario.create({ nome_completo, senha, email, cidade, estado, idade, telefone, instagram, facebook });
+            const novoUser = await usuario.create({...dados, nome_completo, senha, email, cidade, estado, idade, telefone, instagram, facebook, administrador: false,   });
 
             const { senha: _, ...usuarioSemSenha } = novoUser.toJSON();
 
@@ -108,15 +108,17 @@ const usuarioController  = {
     },
     async authenticacao(req,res){
         try {
-            const {id, senha} = req.body;
+            const {email, senha} = req.body;
             
-            const user = await usuario.findByPk(id);
+            const user = await usuario.findOne({where: {email: email}});
             
             if(!user){
                 return res.status(401).json({"erro": "Email ou senha inválidos."})
             }
             const senhad = await encrypt.decrypt(user.senha, chave, 256);
 
+            console.log(` senha req: ${senha} \n  senha real: ${senhad}`)
+            
             if(senha !== senhad){
                 return res.status(401).json({"erro": "Email ou senha inválidos."})  
             }

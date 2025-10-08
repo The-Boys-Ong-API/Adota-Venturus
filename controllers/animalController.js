@@ -1,4 +1,4 @@
-import { Animal as animal, Usuario as usuario } from "../models/Modelo.js";
+import { Animal as animal, Usuario as usuario, PedidoAdocao as pedidoAdocao } from "../models/Modelo.js";
 import dotenv from "dotenv";
 import encryptjs from "encryptjs";
 dotenv.config();
@@ -43,21 +43,60 @@ const AnimalController = {
             console.error(error);
             return res.status(500).json({ erro: "Erro interno ao cadastrar o animal..."});
         }
-    },
-    async buscarPorId(req, res) {
-        try {
+    },async BuscarAnimais(req, res) {
+    try {
+    
+        const animais = await animal.findAll();
+        return res.status(200).json({  data:animais , total: animais.length });
+
+    } catch (error) {
+        return res.status(500).json({ erro: "Erro ao buscar animais" });
+    }
+    
+},
+    async buscarPorId(req,res){
+         try {
             const { id } = req.params;
             const anima = await animal.findByPk(id);
+
+            //const pedidos = await pedidoAdocao.findAll({where: {animal_id: pedidoAdocao.id}});
 
             if (!anima){
                 return res.status(404).json({ erro: "Animal não encontrado..."});
             }
 
+            return res.status(200).json(anima);
+
             /*await testAnimal.update(dados);
 
             const { senha: _, ...animalSemSenha } = animal.toJSON();
             */
-            return res.status(200).json(anima);
+        }catch (error) {
+            console.error(error);
+            return res.status(500).json({ erro: "Erro ao buscar dados do animal..."});
+        }
+    },
+    async adminBuscarPorId(req, res) {
+        try {
+            const { id } = req.params;
+            const anima = await animal.findByPk(id, { attributes: { exclude: ['createdAt', 'updatedAt'] }});
+
+
+            if (!anima){
+                return res.status(404).json({ erro: "Animal não encontrado..."});
+            }
+
+            const pedido = await pedidoAdocao.findAll({ where: { animalId: anima.id } });
+
+            const pedidos = pedido.map(p => p.id);
+            console.log(pedidos);
+
+            return res.status(200).json(  {...anima.toJSON(), pedidos: pedidos} );
+
+            /*await testAnimal.update(dados);
+
+            const { senha: _, ...animalSemSenha } = animal.toJSON();
+            */
         }catch (error) {
             console.error(error);
             return res.status(500).json({ erro: "Erro ao buscar dados do animal..."});
@@ -103,9 +142,8 @@ const AnimalController = {
         }
     },
     async adminBuscarAnimais(req, res) {
-    
     try {
-        const { id, senha: senhareq } = req.body;
+        const { id, senha: senhareq } = req.query;
 
         // console.log("ID recebido:", id);
         // console.log("Senha recebida:", senhareq);
@@ -122,7 +160,7 @@ const AnimalController = {
         }
 
         const animais = await animal.findAll();
-        return res.status(200).json({ animais, total: animais.length });
+        return res.status(200).json({ data:animais, total: animais.length });
 
     } catch (error) {
         return res.status(500).json({ erro: "Erro ao buscar animais" });
