@@ -19,10 +19,9 @@ Repositório de referência para o desenvolvimento deste projeto:
 
 ---
 
-## 🔰 Feito por
+## 🔰 Feito pelos Alunos do 2 DS AMS
 
 Diogo André Messias,
 Matheus Bufon Alves,
 Murilo Monteiro Zanetti,
 Victor Gabriel Cruz de Souza Dumer.
-
